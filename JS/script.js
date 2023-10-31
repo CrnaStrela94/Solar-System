@@ -1,10 +1,12 @@
+/*********************** loading DOM document  and making sure DOM is loaded***************** */
 document.addEventListener("DOMContentLoaded", main);
-
+/********************** this function is getting the api Key and bodies parts****************** */
 async function main() {
   const apiKey = await getApiKey();
+  console.log(`Api key from main: ${apiKey}`);
   const bodies = await getBodies(apiKey);
   console.log(bodies);
-
+  /******************this part is listening for click in DOM and listening for specific data name****************** */
   document.querySelectorAll(".planet").forEach((planet) => {
     planet.addEventListener("click", function () {
       const planetName = this.getAttribute("data-name");
@@ -12,13 +14,7 @@ async function main() {
     });
   });
 }
-// let resp = await fetch(
-//   "https://n5n3eiyjb0.execute-api.eu-north-1.amazonaws.com/bodies",
-//   {
-//     method: "GET",
-//     headers: { "x-zocom": "${apiKey}" },
-//   }
-// );
+/*******************this function is for listening for what data name was used and output planet info*************** */
 async function fetchPlanetData(planetName, apiKey) {
   const planetElement = document.querySelector(`[data-name="${planetName}"]`);
   let infoElement = planetElement.querySelector(".planet-info");
@@ -49,38 +45,30 @@ async function fetchPlanetData(planetName, apiKey) {
 }
 
 const url = "https://n5n3eiyjb0.execute-api.eu-north-1.amazonaws.com";
-
+/****************************** Function to get API KEY and then send it to apiKey ******************************** */
 async function getApiKey() {
   try {
-    const response = await fetch(
-      `https://n5n3eiyjb0.execute-api.eu-north-1.amazonaws.com/keys`,
-      {
-        method: "POST",
-      }
-    );
-
-    const { body, ok, ...rest } = response;
-
-    console.log(JSON.stringify(body), ok);
-    return body.key;
+    const response = await fetch(`${url}/keys`, {
+      method: "POST",
+    });
+    if (!response.ok) {
+      throw new Error(`http error status ${response.status}`);
+    }
+    const data = await response.json();
+    console.log("Api key:", data.key);
+    return data.key;
   } catch (error) {
     console.error("Error fetching API key:", error);
   }
 }
-
+/****************************** this function is getting Bodies by using api key and url******************************* */
 async function getBodies(apiKey) {
   console.log("API key;", apiKey);
   try {
-    const response = await fetch(
-      "https://n5n3eiyjb0.execute-api.eu-north-1.amazonaws.com/bodies",
-      {
-        method: "GET",
-        mode: "no-cors",
-        headers: { "x-zocom": apiKey },
-      }
-    );
-
-    console.log(response);
+    const response = await fetch(`${url}/bodies`, {
+      method: "GET",
+      headers: { "x-zocom": apiKey },
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
