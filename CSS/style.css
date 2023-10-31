@@ -8,10 +8,12 @@ body {
   margin: 0;
   width: 100vw;
   height: 100vh;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 main {
-  height: inherit;
+  /* height: inherit; */
   display: grid;
   grid-template-columns: repeat(10 1fr);
   grid-template-rows: repeat(1 1fr);
@@ -110,10 +112,22 @@ main {
   grid-column: 7/8;
 }
 .saturn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: rgb(200, 160, 60);
   border-radius: 50rem;
   width: 7rem;
   height: 7rem;
+}
+.saturn:before {
+  content: "";
+  border-radius: 100%;
+  position: absolute;
+  width: 10rem;
+  height: 0.4rem;
+  transform: rotate(-30deg);
+  background: rgba(255, 255, 255, 0.4);
 }
 .saturn:hover {
   transition-duration: 1.5s;
