@@ -1,5 +1,32 @@
 /*********************** loading DOM document  and making sure DOM is loaded***************** */
 document.addEventListener("DOMContentLoaded", main);
+
+function showModularPopup(planetData) {
+  const titleElement = document.querySelector("#planetTitle");
+  const latinNameElement = document.querySelector("#planetLatinName");
+  const infoElement = document.querySelector("#planetInfo");
+  const circumferenceElement = document.querySelector("#planetCircumference");
+  const distanceElement = document.querySelector("#planetDistance");
+  const tempDayElement = document.querySelector("#planetTempDay");
+  const tempNightElement = document.querySelector("#planetTempNight");
+  const moonsElement = document.querySelector("#planetMoons");
+
+  titleElement.innerText = planetData.name;
+  latinNameElement.innerText = planetData.latinName;
+  infoElement.innerText = planetData.desc;
+  circumferenceElement.innerText = `${planetData.circumference} km`;
+  distanceElement.innerText = `${planetData.distance} km`;
+  tempDayElement.innerText = `${planetData.temp?.day} C`;
+  tempNightElement.innerText = `${planetData.temp?.night} C`;
+  moonsElement.innerText = planetData.moons?.join(", ") || "Ingen Måne";
+
+  document.querySelector("#modularPopup").style.display = "block";
+}
+
+function closeModular() {
+  document.querySelector("#modularPopup").style.display = "none";
+}
+
 /********************** this function is getting the api Key and bodies parts****************** */
 async function main() {
   const apiKey = await getApiKey();
@@ -14,33 +41,22 @@ async function main() {
     });
   });
 }
-/*******************this function is for listening for what data name was used and output planet info*************** */
+/*******************this function is for listening for what data name was used and sends planet info to showModularPopup*************** */
 async function fetchPlanetData(planetName, apiKey) {
   const planetElement = document.querySelector(`[data-name="${planetName}"]`);
   let infoElement = planetElement.querySelector(".planet-info");
-
-  if (!infoElement) {
-    infoElement = document.createElement("div");
-    infoElement.classList.add("planet-info");
-    planetElement.appendChild(infoElement);
-  } else {
-    infoElement.remove();
-    return;
-  }
 
   try {
     const bodies = await getBodies(apiKey);
     const planetData = bodies.find((planet) => planet.name === planetName);
     if (planetData) {
-      infoElement.textContent = `Details for ${planetName}: ${JSON.stringify(
-        planetData
-      )}`;
+      showModularPopup(planetData);
     } else {
-      infoElement.textContent = `No data found for ${planetName}`;
+      showModularPopup({ name: planetName, desc: "No data found" });
     }
   } catch (error) {
     console.error(`Error fetching planet data:`, error);
-    infoElement.textContent = `Error fetching planet data for ${planetName}`;
+    showModularPopup({ name: planetName, desc: "Error fetching planet data" });
   }
 }
 
