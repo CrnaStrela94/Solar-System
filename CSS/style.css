@@ -15,6 +15,23 @@ main {
   align-items: center;
   height: 100vh;
 }
+.nameWrapper {
+  display: flex;
+  align-items: end;
+  flex-direction: column;
+  grid-column: 7 / -1;
+  padding: 1rem;
+}
+.nameWrapper h1 {
+  color: white;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+.nameWrapper h3 {
+  color: gold;
+  font-family: "Courier New", Courier, monospace;
+  letter-spacing: 0.2rem;
+}
 
 .planetWrapperOne,
 .planetWrapperTwo,
@@ -54,10 +71,11 @@ main {
 }
 
 .sun {
-  background-color: #ffd029;
-  width: 50vw;
-  height: 50vw;
-  margin-left: -45.5vw;
+  background: #ffd029;
+  box-shadow: 0px 0px 250px 0px rgba(255, 208, 41, 0.2);
+  width: 60vw;
+  height: 60vw;
+  margin-left: -50vw;
 }
 .sun:hover {
   transition-duration: 1.5s;
@@ -202,16 +220,54 @@ main {
 
 .modularPopup {
   display: none;
+  align-items: center;
+  border: 5px solid black;
   position: fixed;
   left: 0;
   top: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(209, 4, 4, 0.747);
+  background: linear-gradient(90deg, #0c164d 0%, #190b22 100%);
   z-index: 1;
 }
-.modularPopup svg {
-  background-size: cover;
+.moon {
+  background-color: #428ed4;
+  border-radius: 50%;
+  width: 60vw;
+  height: 60vw;
+  margin-left: -50vw;
+}
+.moonOverlayOne {
+  border-radius: 50%;
+  width: 60vw;
+  height: 60vw;
+  margin-left: -58vw;
+  background: rgba(66, 142, 212, 0.6);
+}
+.moonOverlayTwo {
+  border-radius: 50%;
+  width: 60vw;
+  height: 60vw;
+  margin-left: -58vw;
+  background: rgba(66, 142, 212, 0.1);
+}
+@keyframes moveStars {
+  from {
+    transform: translateY(-100vh);
+  }
+  to {
+    transform: translateY(100vh);
+  }
+}
+.star {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0.2rem 0.2rem 0.2rem yellow;
+  width: 0.1rem;
+  height: 0.1rem;
+  border-radius: 50%;
+  animation: moveStars 10s linear infinite;
+  z-index: -1;
 }
 
 .modularPopup-content {
@@ -274,8 +330,15 @@ main {
   overflow-y: auto;
 }
 .planet-info p {
-  font-size: 1rem;
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-size: 1rem;
+  font-family: Arial, Helvetica, sans-serif; */
+  color: #fff;
+
+  font-family: Roboto Condensed;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 170%;
 }
 .planet-info::-webkit-scrollbar {
   width: 4px;

@@ -20,7 +20,7 @@ function showModularPopup(planetData) {
   tempNightElement.innerText = `${planetData.temp?.night} C`;
   moonsElement.innerText = planetData.moons?.join(", ") || "Ingen Måne";
 
-  document.querySelector("#modularPopup").style.display = "block";
+  document.querySelector("#modularPopup").style.display = "flex";
 }
 
 function closeModular() {
@@ -43,9 +43,6 @@ async function main() {
 }
 /*******************this function is for listening for what data name was used and sends planet info to showModularPopup*************** */
 async function fetchPlanetData(planetName, apiKey) {
-  const planetElement = document.querySelector(`[data-name="${planetName}"]`);
-  let infoElement = planetElement.querySelector(".planet-info");
-
   try {
     const bodies = await getBodies(apiKey);
     const planetData = bodies.find((planet) => planet.name === planetName);
@@ -97,3 +94,17 @@ async function getBodies(apiKey) {
     return [];
   }
 }
+/****************creating stars random****************** */
+const starContainer = document.querySelector(".stars");
+
+function createStars() {
+  for (let i = 0; i < 58; i++) {
+    const star = document.createElement("div");
+    star.className = "star";
+    star.style.left = `${Math.random() * 100}vw`;
+    star.style.top = `${Math.random() * 100}vh`;
+    starContainer.appendChild(star);
+  }
+}
+
+createStars();
