@@ -1,6 +1,6 @@
 /*********************** loading DOM document  and making sure DOM is loaded***************** */
 document.addEventListener("DOMContentLoaded", main);
-
+/************this function is listening for all id and outputing right info in right place ***************** */
 function showModularPopup(planetData) {
   const titleElement = document.querySelector("#planetTitle");
   const latinNameElement = document.querySelector("#planetLatinName");
@@ -19,10 +19,10 @@ function showModularPopup(planetData) {
   tempDayElement.innerText = `${planetData.temp?.day} C`;
   tempNightElement.innerText = `${planetData.temp?.night} C`;
   moonsElement.innerText = planetData.moons?.join(", ") || "Ingen Måne";
-
+  /************ this querySelector is waiting on clict to display the new popup and changing display from none to flex************ */
   document.querySelector("#modularPopup").style.display = "flex";
 }
-
+/***********this function is waiting on click to close the popup så its changing display to none *************** */
 function closeModular() {
   document.querySelector("#modularPopup").style.display = "none";
 }

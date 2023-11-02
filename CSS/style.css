@@ -16,11 +16,15 @@ main {
   height: 100vh;
 }
 .nameWrapper {
+  position: absolute;
+  right: 0;
+  top: 10%;
+  transform: translateY(-50%);
   display: flex;
   align-items: end;
   flex-direction: column;
-  grid-column: 7 / -1;
   padding: 1rem;
+  z-index: 1;
 }
 .nameWrapper h1 {
   color: white;
@@ -232,25 +236,14 @@ main {
 }
 .moon {
   background-color: #428ed4;
+  box-shadow: rgb(66, 142, 212, 0.1) 0px 0px 0px 100px,
+    rgb(66, 142, 212, 0.06) 0px 0px 0px 50px;
   border-radius: 50%;
   width: 60vw;
   height: 60vw;
   margin-left: -50vw;
 }
-.moonOverlayOne {
-  border-radius: 50%;
-  width: 60vw;
-  height: 60vw;
-  margin-left: -58vw;
-  background: rgba(66, 142, 212, 0.6);
-}
-.moonOverlayTwo {
-  border-radius: 50%;
-  width: 60vw;
-  height: 60vw;
-  margin-left: -58vw;
-  background: rgba(66, 142, 212, 0.1);
-}
+
 @keyframes moveStars {
   from {
     transform: translateY(-100vh);
